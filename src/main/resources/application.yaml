@@ -1,4 +1,9 @@
 spring:
+  security:
+    user:
+      name: user
+      password: password
+
   application:
     name: TestingServerApi
   datasource:
@@ -16,3 +21,5 @@ spring:
 jwt:
   header: Authorization
   secret: ==================springboot=jwt=example========================
+server:
+  port: 8080
