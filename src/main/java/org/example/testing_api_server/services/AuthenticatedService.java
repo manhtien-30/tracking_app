@@ -2,7 +2,6 @@ package org.example.testing_api_server.services;
 
 import org.example.testing_api_server.enties.dto.ApiResponseDto;
 import org.example.testing_api_server.enties.dto.SignInRequestDto;
-import org.example.testing_api_server.enties.dto.SignInResponseDto;
 import org.example.testing_api_server.enties.dto.SignUpRequestDto;
 import org.example.testing_api_server.utils.exceptions.RoleNotFoundException;
 import org.example.testing_api_server.utils.exceptions.UserAlreadyExistsException;

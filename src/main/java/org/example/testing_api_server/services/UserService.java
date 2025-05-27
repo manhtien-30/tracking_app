@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 @Service
 public interface UserService {
-    public Optional<User> getUserById(Integer id);
+     Optional<User> getUserById(Integer id);
     void save(User user);
 
 }

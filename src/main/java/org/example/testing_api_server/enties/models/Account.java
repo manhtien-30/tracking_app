@@ -3,8 +3,6 @@ package org.example.testing_api_server.enties.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
-import java.security.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
