@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
@@ -17,15 +19,19 @@ public class UserDetailsImpl implements UserDetails {
     private Integer id;
     private String username;
     private String password;
+    private String email;
     private boolean isEnabled;
     private Collection<? extends GrantedAuthority> authorities;
     public static UserDetailsImpl build(Account account) {
         List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority(account.getRole().name()));
+                new SimpleGrantedAuthority(account.getRoles().stream()
+                        .map(roles -> new SimpleGrantedAuthority(roles.getRole().name()))
+                        .toList().toString()));
         return new UserDetailsImpl(
                 account.getId(),
                 account.getUsername(),
                 account.getPassword(),
+                account.getEmail(),
                 account.getIsActive(),
                 authorities
         );
@@ -49,4 +55,5 @@ return true;
     public boolean isEnabled() {
         return true;
     }
+
 }

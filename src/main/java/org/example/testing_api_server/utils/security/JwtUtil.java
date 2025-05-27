@@ -1,11 +1,10 @@
-package org.example.testing_api_server.utils;
+package org.example.testing_api_server.utils.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.example.testing_api_server.enties.models.User;
 import org.example.testing_api_server.enties.models.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

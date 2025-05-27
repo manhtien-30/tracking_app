@@ -1,4 +1,4 @@
-package org.example.testing_api_server.services;
+package org.example.testing_api_server.services.impl;
 
 import org.example.testing_api_server.enties.models.Account;
 import org.example.testing_api_server.enties.models.UserDetailsImpl;

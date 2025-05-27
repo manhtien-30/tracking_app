@@ -1,20 +1,20 @@
 package org.example.testing_api_server.enties.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.security.Timestamp;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "accounts")
 public class Account {
     @OneToOne(fetch = FetchType.LAZY)
@@ -31,6 +31,9 @@ public class Account {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
 
     @ColumnDefault("true")
     @Column(name = "is_active")
@@ -55,6 +58,9 @@ public class Account {
 
     @Column(name = "reset_token_expires")
     private OffsetDateTime resetTokenExpires;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "roles",
+            joinColumns = @JoinColumn(name = "accountid"),
+            inverseJoinColumns = @JoinColumn(name = "id_role"))
+    private Set<Roles> roles = new HashSet<>();
 }
