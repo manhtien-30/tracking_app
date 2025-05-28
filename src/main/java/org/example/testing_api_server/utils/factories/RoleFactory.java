@@ -13,10 +13,10 @@ public class RoleFactory {
     public Roles getInstance(String role){
         switch (role){
             case "user" -> {
-                return roleRepository.findbyName(ERole.USER);
+                return roleRepository.findByName(ERole.USER);
             }
             case "admin" -> {
-                return roleRepository.findbyName(ERole.ADMIN);
+                return roleRepository.findByName(ERole.ADMIN);
             }
             default -> throw new IllegalArgumentException("Invalid role");
         }

@@ -8,7 +8,6 @@ import org.example.testing_api_server.utils.exceptions.UserAlreadyExistsExceptio
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface AuthenticatedService {
     ResponseEntity<ApiResponseDto<?>> signUp(SignUpRequestDto signUpRequestDto) throws UserAlreadyExistsException, RoleNotFoundException;
 

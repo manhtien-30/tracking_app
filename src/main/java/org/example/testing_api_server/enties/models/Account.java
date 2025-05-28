@@ -57,7 +57,7 @@ public class Account {
     @Column(name = "reset_token_expires")
     private OffsetDateTime resetTokenExpires;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(  name = "roles",
+    @JoinTable(  name = "account_role",
             joinColumns = @JoinColumn(name = "accountid"),
             inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Roles> roles = new HashSet<>();

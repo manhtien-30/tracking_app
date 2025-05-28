@@ -8,12 +8,11 @@ import org.example.testing_api_server.enties.models.Account;
 import org.example.testing_api_server.enties.models.ResponseStatus;
 import org.example.testing_api_server.enties.models.Roles;
 import org.example.testing_api_server.enties.models.UserDetailsImpl;
+import org.example.testing_api_server.services.AccountService;
 import org.example.testing_api_server.services.AuthenticatedService;
-import org.example.testing_api_server.services.UserService;
 import org.example.testing_api_server.utils.exceptions.RoleNotFoundException;
 import org.example.testing_api_server.utils.exceptions.UserAlreadyExistsException;
 import org.example.testing_api_server.utils.factories.RoleFactory;
-import org.example.testing_api_server.utils.security.AuthenticatedTokenFilter;
 import org.example.testing_api_server.utils.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,9 +33,8 @@ import java.util.stream.Collectors;
 @Service
 public class AuthenticatedServiceImpl implements AuthenticatedService {
     @Autowired
-    private AccountServiceImpl accountService;
-    @Autowired
-    private UserService userService;
+    private AccountService accountService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -46,8 +44,6 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
     private RoleFactory roleFactory;
     @Autowired
     private JwtUtil jwtUtils;
-    @Autowired
-    private AuthenticatedTokenFilter authenticatedTokenFilter;
     @Override
     public ResponseEntity<ApiResponseDto<?>> signUp(SignUpRequestDto signUpRequestDto)
             throws UserAlreadyExistsException, RoleNotFoundException {
@@ -92,7 +88,7 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
         return ResponseEntity.ok(
                 ApiResponseDto.builder()
                         .status(String.valueOf(ResponseStatus.SUCCESS))
-                        .message("Sign in successfull!")
+                        .message("Sign in successfully!")
                         .response(signInResponseDto)
                         .build()
         );
