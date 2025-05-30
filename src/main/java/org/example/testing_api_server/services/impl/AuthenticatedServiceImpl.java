@@ -5,7 +5,7 @@ import org.example.testing_api_server.enties.dto.SignInRequestDto;
 import org.example.testing_api_server.enties.dto.SignInResponseDto;
 import org.example.testing_api_server.enties.dto.SignUpRequestDto;
 import org.example.testing_api_server.enties.models.Account;
-import org.example.testing_api_server.enties.models.ResponseStatus;
+import org.example.testing_api_server.enties.models.Enum.ResponseStatus;
 import org.example.testing_api_server.enties.models.Roles;
 import org.example.testing_api_server.enties.models.UserDetailsImpl;
 import org.example.testing_api_server.services.AccountService;
@@ -66,9 +66,10 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
     @Override
     public ResponseEntity<ApiResponseDto<?>> signIn(SignInRequestDto signInRequestDto) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signInRequestDto.getEmail(), signInRequestDto.getPassword()));
+                new UsernamePasswordAuthenticationToken(signInRequestDto.getName(), signInRequestDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();

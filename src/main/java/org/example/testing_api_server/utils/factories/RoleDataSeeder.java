@@ -1,7 +1,7 @@
 package org.example.testing_api_server.utils.factories;
 
 import jakarta.transaction.Transactional;
-import org.example.testing_api_server.enties.models.ERole;
+import org.example.testing_api_server.enties.models.Enum.ERole;
 import org.example.testing_api_server.enties.models.Roles;
 import org.example.testing_api_server.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -24,8 +24,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-//    @Autowired
-//    private AuthEntryPointJwt unauthorizedHandler;
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
     public AuthenticatedTokenFilter authenticationJwtTokenFilter() {
@@ -54,13 +54,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
     http    .csrf(AbstractHttpConfigurer::disable)
-            //.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-            //.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//            .authorizeHttpRequests(auth ->
-//                    auth.requestMatchers("/api/auth/**").permitAll()
-//                            .anyRequest().authenticated()
-//            )
-            ;
+            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth ->
+                    auth.requestMatchers("/api/auth/**").permitAll()
+                            .anyRequest().authenticated()
+            );
         http.authenticationProvider(authenticationProvider());
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

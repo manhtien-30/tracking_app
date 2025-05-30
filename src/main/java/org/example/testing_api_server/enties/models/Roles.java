@@ -3,6 +3,7 @@ package org.example.testing_api_server.enties.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.testing_api_server.enties.models.Enum.ERole;
 
 @Entity
 @Table(name = "role")

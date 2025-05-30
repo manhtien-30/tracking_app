@@ -35,7 +35,7 @@ public class Account {
 
     @ColumnDefault("true")
     @Column(name = "is_active")
-    private Boolean isActive;
+    private Boolean isActive ;
 
     @ColumnDefault("false")
     @Column(name = "is_verified")
@@ -56,9 +56,19 @@ public class Account {
 
     @Column(name = "reset_token_expires")
     private OffsetDateTime resetTokenExpires;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(  name = "account_role",
             joinColumns = @JoinColumn(name = "accountid"),
             inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Roles> roles = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ",roles=" + roles +
+                '}';
+    }
 }

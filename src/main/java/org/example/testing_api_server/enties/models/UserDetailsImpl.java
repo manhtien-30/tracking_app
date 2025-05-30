@@ -56,4 +56,15 @@ return true;
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "UserDetailsImpl{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", isEnabled=" + isEnabled +
+                ", authorities=" + authorities +
+                '}';
+    }
+
 }

@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class SignInRequestDto {
     @NotBlank(message = "Email is required!")
-    private String email;
+    private String name;
 
     @NotBlank(message = "Password is required!")
     private String password;
