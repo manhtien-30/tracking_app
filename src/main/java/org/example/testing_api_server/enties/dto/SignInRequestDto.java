@@ -8,8 +8,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SignInRequestDto {
-    @NotBlank(message = "Email is required!")
-    private String name;
+    @NotBlank(message = "username is required!")
+    private String username;
 
     @NotBlank(message = "Password is required!")
     private String password;

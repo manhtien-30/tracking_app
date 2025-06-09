@@ -1,10 +1,12 @@
 package org.example.testing_api_server.services.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.example.testing_api_server.enties.dto.ApiResponseDto;
 import org.example.testing_api_server.enties.dto.SignInRequestDto;
 import org.example.testing_api_server.enties.dto.SignInResponseDto;
 import org.example.testing_api_server.enties.dto.SignUpRequestDto;
 import org.example.testing_api_server.enties.models.Account;
+import org.example.testing_api_server.enties.models.AccountProfiles;
 import org.example.testing_api_server.enties.models.Enum.ResponseStatus;
 import org.example.testing_api_server.enties.models.Roles;
 import org.example.testing_api_server.enties.models.UserDetailsImpl;
@@ -25,12 +27,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AuthenticatedServiceImpl implements AuthenticatedService {
     @Autowired
     private AccountService accountService;
@@ -66,7 +70,7 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
     @Override
     public ResponseEntity<ApiResponseDto<?>> signIn(SignInRequestDto signInRequestDto) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signInRequestDto.getName(), signInRequestDto.getPassword()));
+                new UsernamePasswordAuthenticationToken(signInRequestDto.getUsername(), signInRequestDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -96,11 +100,15 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
     }
 
     private Account createAccount(SignUpRequestDto signUpRequestDto) throws RoleNotFoundException {
+
         return Account.builder()
                 .email(signUpRequestDto.getEmail())
                 .username(signUpRequestDto.getUsername())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                 .roles(determineRoles(signUpRequestDto.getRoles()))
+                .createdAt( OffsetDateTime.now())
+                .isActive(true)
+                .isVerified(true)
                 .build();
     }
     private Set<Roles> determineRoles(Set<String> strRoles) throws RoleNotFoundException {

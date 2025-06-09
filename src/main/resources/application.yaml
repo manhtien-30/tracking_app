@@ -7,7 +7,7 @@ spring:
   application:
     name: TestingServerApi
   datasource:
-    url: jdbc:postgresql://localhost:5432/api_server_db
+    url: jdbc:postgresql://localhost:5432/database_auth_server
     username: postgres
     password: 30102001
     driver-class-name: org.postgresql.Driver

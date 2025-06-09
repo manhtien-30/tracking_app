@@ -18,6 +18,9 @@ public class RoleFactory {
             case "admin" -> {
                 return roleRepository.findByName(ERole.ADMIN);
             }
+            case "moderator" -> {
+                return roleRepository.findByName(ERole.MODERATOR);
+            }
             default -> throw new IllegalArgumentException("Invalid role");
         }
     }

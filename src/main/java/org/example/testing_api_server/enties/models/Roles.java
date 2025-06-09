@@ -6,15 +6,15 @@ import lombok.NoArgsConstructor;
 import org.example.testing_api_server.enties.models.Enum.ERole;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 @Data
 @NoArgsConstructor
 public class Roles {
     @Id
-    @Column(name = "id_role")
+    @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idRole;
-
+    @Column(name = "role_name")
     @Enumerated(EnumType.STRING)
     private ERole name;
     public Roles(ERole name) {
