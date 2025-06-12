@@ -1,5 +1,6 @@
 package org.example.testing_api_server.services.impl;
 
+import jakarta.transaction.Transactional;
 import org.example.testing_api_server.enties.models.Account;
 import org.example.testing_api_server.enties.models.UserDetailsImpl;
 import org.example.testing_api_server.repositories.AccountRepository;
@@ -14,10 +15,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account =  accountRepository.findByUsername(username)
                 .orElseThrow(()-> new UsernameNotFoundException("User not found"));
-        System.out.println(account.toString());
+       // System.out.println(account.toString());
         return UserDetailsImpl.build(account);
     }
 }

@@ -21,7 +21,14 @@ public class SignUpRequestDto {
     @Email(message = "Email is not in valid format!")
     @NotBlank(message = "Email is required!")
     private String email;
-
+    @NotBlank(message = "First name is required!")
+    @Size(min = 3, message = "First name must have atleast 3 characters!")
+    @Size(max = 20, message = "First name can have have atmost 20 characters!")
+    private String firstName;
+    @NotBlank(message = "Last name is required!")
+    @Size(min = 3, message = "Last name must have atleast 3 characters!")
+    @Size(max = 20, message = "Last name can have have atmost 20 characters!")
+    private String lastName;
     @NotBlank(message = "Password is required!")
     @Size(min = 8, message = "Password must have atleast 8 characters!")
     @Size(max = 20, message = "Password can have have atmost 20 characters!")

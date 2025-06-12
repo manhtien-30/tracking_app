@@ -1,5 +1,6 @@
 package org.example.testing_api_server.services.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.testing_api_server.enties.dto.SignUpRequestDto;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,14 +25,15 @@ public class AccountServiceImpl implements AccountService {
     private final ModelMapper modelMapper;
     private AccountProfilesRepository accountProfilesRepository;
     @Override
+    //@Transactional
     public void save(Account account) {
-
+        //accountProfilesRepository.save(account.getAccountProfiles());
         accountRepository.save(account);
     }
 
     @Override
     public void update(Account account) {
-
+        accountRepository.save(account);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> getListAccounts() {
 
-        return null;
+        return accountRepository.findAll();
     }
 
 }

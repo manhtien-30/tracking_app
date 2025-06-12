@@ -10,6 +10,7 @@ import org.example.testing_api_server.enties.models.AccountProfiles;
 import org.example.testing_api_server.enties.models.Enum.ResponseStatus;
 import org.example.testing_api_server.enties.models.Roles;
 import org.example.testing_api_server.enties.models.UserDetailsImpl;
+import org.example.testing_api_server.repositories.AccountProfilesRepository;
 import org.example.testing_api_server.services.AccountService;
 import org.example.testing_api_server.services.AuthenticatedService;
 import org.example.testing_api_server.utils.exceptions.RoleNotFoundException;
@@ -89,7 +90,9 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
                 .type("Bearer")
                 .roles(roles)
                 .build();
-
+        Account account = accountService.findByUsername(userDetails.getUsername()).orElseThrow(()-> new RuntimeException("User not found"));
+        account.setLastLogin(signInResponseDto.getLastLogin());
+        accountService.update(account);
         return ResponseEntity.ok(
                 ApiResponseDto.builder()
                         .status(String.valueOf(ResponseStatus.SUCCESS))
@@ -101,7 +104,11 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
 
     private Account createAccount(SignUpRequestDto signUpRequestDto) throws RoleNotFoundException {
 
-        return Account.builder()
+        AccountProfiles accountProfiles = AccountProfiles.builder()
+                .firstName(signUpRequestDto.getFirstName())
+                .lastName(signUpRequestDto.getLastName())
+                .build();
+        Account account =  Account.builder()
                 .email(signUpRequestDto.getEmail())
                 .username(signUpRequestDto.getUsername())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
@@ -110,6 +117,9 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
                 .isActive(true)
                 .isVerified(true)
                 .build();
+        accountProfiles.setAccount(account);
+        account.setAccountProfiles(accountProfiles);
+        return account;
     }
     private Set<Roles> determineRoles(Set<String> strRoles) throws RoleNotFoundException {
         Set<Roles> roles = new HashSet<>();

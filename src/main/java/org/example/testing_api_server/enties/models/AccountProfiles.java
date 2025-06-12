@@ -14,18 +14,19 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "account_profiles")
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountProfiles {
     @Id
-    @MapsId
+   // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "account_id", nullable = false)
     private Integer account_id;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "account_id", nullable = false)
+   // @OneToOne( mappedBy = "accountProfiles")
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @Size(max = 50)
@@ -43,16 +44,14 @@ public class AccountProfiles {
     private String phone;
 
     @Size(max = 10)
-    @NotNull
-    @ColumnDefault("'en-US'")
+    @Builder.Default
     @Column(name = "locale", nullable = false, length = 10)
-    private String locale;
+    private String locale = "vn";
 
     @Size(max = 50)
-    @NotNull
-    @ColumnDefault("'UTC'")
+    @Builder.Default
     @Column(name = "timezone", nullable = false, length = 50)
-    private String timezone;
+    private String timezone = "Asia/Ho_Chi_Minh";
 
     @Column(name = "avatar_url", length = Integer.MAX_VALUE)
     private String avatarUrl;

@@ -75,8 +75,8 @@ public class Account {
     @Column(name = "mfa_enabled", nullable = false)
     private Boolean mfaEnabled = false;
 
-    @OneToOne(mappedBy = "account")
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JoinColumn(name = "account_id", nullable = false)
     private AccountProfiles accountProfiles;
 
     @ManyToMany

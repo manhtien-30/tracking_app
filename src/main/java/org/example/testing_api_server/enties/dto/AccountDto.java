@@ -3,6 +3,7 @@ package org.example.testing_api_server.enties.dto;
 import lombok.*;
 import org.example.testing_api_server.enties.models.Roles;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 @Data
 @Getter
@@ -10,9 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountDto {
-    private Integer id;
     private String username;
-    private String email;
-    private Boolean isActive;
+    private OffsetDateTime lastLogin;
     private List<Roles> roles;
 }
