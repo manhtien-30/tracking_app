@@ -3,6 +3,7 @@ package org.example.testing_api_server.services.impl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.example.testing_api_server.enties.dto.AccountDto;
 import org.example.testing_api_server.enties.dto.SignUpRequestDto;
 import org.example.testing_api_server.enties.models.Account;
 import org.example.testing_api_server.repositories.AccountProfilesRepository;
@@ -13,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -28,6 +31,13 @@ public class AccountServiceImpl implements AccountService {
     //@Transactional
     public void save(Account account) {
         //accountProfilesRepository.save(account.getAccountProfiles());
+        accountRepository.save(account);
+    }
+
+    @Override
+    public void updateLastlogin(String username, OffsetDateTime lastLogin) {
+        Account account = accountRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("User not found"));
+        account.setLastLogin(lastLogin);
         accountRepository.save(account);
     }
 
@@ -46,16 +56,33 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public void updateAccountProfile(Account account) {
+
+    }
+
+    @Override
     public Optional<Account> findByUsername(String username) {
 
         return accountRepository.findByUsername(username);
     }
-    //method: get list of all account, return list of accountDto
-    //TODO: implement method
     @Override
-    public List<Account> getListAccounts() {
+    public List<AccountDto> getListAccounts() {
+        return accountRepository.getListAccounts()
+                .stream()
+                .map(this::toAccountDto)
+                .collect(Collectors.toList());
+    }
 
-        return accountRepository.findAll();
+    private AccountDto toAccountDto(Account account) {
+        return AccountDto.builder()
+                .accountId(account.getId())
+                .username(account.getUsername())
+                .email(account.getEmail())
+                .firstName(account.getAccountProfiles().getFirstName())
+                .lastName(account.getAccountProfiles().getLastName())
+                .phone(account.getAccountProfiles().getPhone())
+                .roles(account.getRoles())
+                .build();
     }
 
 }

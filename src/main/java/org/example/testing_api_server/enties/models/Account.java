@@ -85,13 +85,4 @@ public class Account {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new LinkedHashSet<>();
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ",roles=" + roles +
-                '}';
-    }
 }

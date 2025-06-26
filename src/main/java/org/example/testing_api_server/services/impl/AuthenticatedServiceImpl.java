@@ -90,9 +90,7 @@ public class AuthenticatedServiceImpl implements AuthenticatedService {
                 .type("Bearer")
                 .roles(roles)
                 .build();
-        Account account = accountService.findByUsername(userDetails.getUsername()).orElseThrow(()-> new RuntimeException("User not found"));
-        account.setLastLogin(signInResponseDto.getLastLogin());
-        accountService.update(account);
+        accountService.updateLastlogin(userDetails.getUsername(), signInResponseDto.getLastLogin());
         return ResponseEntity.ok(
                 ApiResponseDto.builder()
                         .status(String.valueOf(ResponseStatus.SUCCESS))
